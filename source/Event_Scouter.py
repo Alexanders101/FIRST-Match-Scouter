@@ -7,15 +7,11 @@ from urllib.error import URLError
 from time import sleep
 
 import joblib
-import numpy as np
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-import main_window
-import start_window
-import add_window
-from utils import *
-import Blue_Alliance_API
+from source.utils import *
+from source import add_window, main_window, Blue_Alliance_API, start_window
 
 
 if getattr(sys, 'frozen', False):

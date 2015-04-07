@@ -16,7 +16,7 @@ class BlueAllianceAPI:
     URL = 'http://www.thebluealliance.com/api/v2/'
     HEADER_KEY = 'X-TBA-App-Id'
     HEADER_VAL = 'frc846:scouting-stats:1'
-    EVENT_KEY = '2015flor'
+    EVENT_KEY = ''
 
     def __init__(self, event_key):
         self.EVENT_KEY = event_key
