@@ -385,6 +385,7 @@ class AddWindow(QDialog, add_window.Ui_Add_match):
         # self.scouting_table.setPalette(pal)
         self.setup_table()
 
+
         if start_data is not None:
             type = ['qm', 'qf', 'sf', 'f']
             self.match_type.setCurrentIndex(type.index(init_type))
@@ -462,6 +463,7 @@ class StartWindow(QDialog, start_window.Ui_Dialog):
         self.year_chosen = False
         self.year_box.activated[int].connect(self.populate_events)
         self.buttonBox.pressed.connect(self.finish_up)
+        self.populate_events()
 
     def populate_events(self):
         self.year_chosen = True
