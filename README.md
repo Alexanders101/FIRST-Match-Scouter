@@ -33,6 +33,7 @@ Todo:
     Export to csv / excel
     SQL / NoSQL database
     Online database
+    Easy implementations for future games
     
     
 
