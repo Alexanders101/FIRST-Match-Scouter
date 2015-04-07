@@ -21,6 +21,7 @@ options = {
             'start_window',
             'utils'
         ],
+        'optimize': 2,
         'path': sys.path + ['frc_scouter']
     }
 }
@@ -36,5 +37,5 @@ setup(  name = "Event Scouter",
         author_email= "alexanders101@gmail.com",
         packages=['frc_scouter'],
         options = options,
-        executables = [Executable("frc_scouter/FRC_Event_Scouter.py", base=base)])
+        executables = [Executable("FRC_Event_Scouter.py", base=base)])
 

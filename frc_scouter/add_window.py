@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'add_window.ui'
 #
-# Created: Fri Apr  3 14:46:43 2015
+# Created: Mon Apr  6 20:52:07 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -223,7 +223,7 @@ class Ui_Add_match(object):
         Add_match.setTabOrder(self.s, self.tote_check)
 
     def retranslateUi(self, Add_match):
-        Add_match.setWindowTitle(QtGui.QApplication.translate("Add_match", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        Add_match.setWindowTitle(QtGui.QApplication.translate("Add_match", "Add Match", None, QtGui.QApplication.UnicodeUTF8))
         self.match_type.setItemText(0, QtGui.QApplication.translate("Add_match", "qm", None, QtGui.QApplication.UnicodeUTF8))
         self.match_type.setItemText(1, QtGui.QApplication.translate("Add_match", "qf", None, QtGui.QApplication.UnicodeUTF8))
         self.match_type.setItemText(2, QtGui.QApplication.translate("Add_match", "sf", None, QtGui.QApplication.UnicodeUTF8))

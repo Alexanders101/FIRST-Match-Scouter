@@ -2,6 +2,16 @@ __author__ = 'alex'
 
 import sys
 import os
+if getattr(sys, 'frozen', False):
+    # frozen
+    FILE_PATH = os.path.dirname(sys.executable)
+else:
+    # unfrozen
+    FILE_PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.extend([FILE_PATH + '/..'])
+DATABASE_FILE = FILE_PATH + '/scouting_database.db'
+SAVED = os.path.isfile(DATABASE_FILE)
+
 import webbrowser as web
 from urllib.error import URLError
 from time import sleep
@@ -12,17 +22,6 @@ from PySide.QtCore import *
 
 from frc_scouter.utils import *
 from frc_scouter import add_window, main_window, Blue_Alliance_API, start_window
-
-
-if getattr(sys, 'frozen', False):
-    # frozen
-    FILE_PATH = os.path.dirname(sys.executable)
-else:
-    # unfrozen
-    FILE_PATH = os.path.dirname(os.path.realpath(__file__))
-
-DATABASE_FILE = FILE_PATH + '/scouting_database.db'
-SAVED = os.path.isfile(DATABASE_FILE)
 
 
 class MainWindow(QMainWindow, main_window.Ui_MainWindow):

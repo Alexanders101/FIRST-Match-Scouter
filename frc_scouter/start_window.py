@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'start_window.ui'
 #
-# Created: Fri Apr  3 14:46:43 2015
+# Created: Mon Apr  6 20:52:07 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,6 +13,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(398, 196)
+        Dialog.setWindowTitle("")
         self.gridLayoutWidget = QtGui.QWidget(Dialog)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 381, 121))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
@@ -65,7 +66,6 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         self.year_label.setText(QtGui.QApplication.translate("Dialog", "Year", None, QtGui.QApplication.UnicodeUTF8))
         self.event_label.setText(QtGui.QApplication.translate("Dialog", "Event", None, QtGui.QApplication.UnicodeUTF8))
         self.year_box.setItemText(0, QtGui.QApplication.translate("Dialog", "2015", None, QtGui.QApplication.UnicodeUTF8))

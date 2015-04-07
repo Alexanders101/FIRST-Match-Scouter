@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Fri Apr  3 14:46:43 2015
+# Created: Mon Apr  6 20:52:06 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -490,11 +490,11 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "FRC Event Scouter", None, QtGui.QApplication.UnicodeUTF8))
         self.choose_title.setText(QtGui.QApplication.translate("MainWindow", " Choose Team Number", None, QtGui.QApplication.UnicodeUTF8))
         self.team_number_text.setText(QtGui.QApplication.translate("MainWindow", "Team Number", None, QtGui.QApplication.UnicodeUTF8))
         self.rank_text.setText(QtGui.QApplication.translate("MainWindow", "Rank", None, QtGui.QApplication.UnicodeUTF8))
