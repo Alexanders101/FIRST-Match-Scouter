@@ -15,12 +15,7 @@ Requirements:
     Joblib
     
 compile.py requires cx_freeze
-  
-  
-Install Instruction:
 
-1. 
-  
 Completed:
 
 - Event selection
