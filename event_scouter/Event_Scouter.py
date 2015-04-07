@@ -10,8 +10,8 @@ import joblib
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-from source.utils import *
-from source import add_window, main_window, Blue_Alliance_API, start_window
+from event_scouter.utils import *
+from event_scouter import add_window, main_window, Blue_Alliance_API, start_window
 
 
 if getattr(sys, 'frozen', False):

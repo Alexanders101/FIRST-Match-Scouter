@@ -8,6 +8,6 @@ setup(  name = "Event Scouter",
         author= 'Alex Shmakov',
         author_email= "alexanders101@gmail.com",
         url="https://github.com/Alexanders101/FIRST-Match-Scouter",
-        requires=['joblib', 'PySide', 'matplotlib', 'numpy']
-
+        requires=['joblib', 'PySide', 'matplotlib', 'numpy'],
+        packages=['event_scouter']
         )
