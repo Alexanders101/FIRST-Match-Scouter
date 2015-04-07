@@ -7,6 +7,7 @@ matplotlib.rcParams['backend.qt4'] = 'PySide'
 import urllib.request
 import json
 import numpy as np
+from numpy import array as np_array
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
@@ -46,41 +47,53 @@ class BlueAllianceAPI:
         for match_type, var in [['qm', 'qualification_matches'], ['qf', 'quarter_final_matches'],
                                 ['sf', 'semi_final_matches'], ['f', 'final_matches']]:
             num_matches = self.__count_matches(self.raw_matches, match_type)
-            zero = range(num_matches)
-            red_teams = np.zeros_like(zero).astype(np.object)
-            blue_teams = np.zeros_like(zero).astype(np.object)
-            blue_scores = np.zeros_like(zero).astype(np.object)
-            red_scores = np.zeros_like(zero).astype(np.object)
-            match_numbers = np.arange(1, num_matches + 1, 1)
+            if num_matches is not 0:
+                # zero = range(num_matches)
+                red_teams = np.zeros((num_matches,), np.object)
+                blue_teams = np.zeros((num_matches,), np.object)
+                blue_scores = np.zeros((num_matches,), np.object)
+                red_scores = np.zeros((num_matches,), np.object)
+                match_numbers = np.arange(1, num_matches + 1, 1)
 
-            for match in self.raw_matches:
-                if match['comp_level'] == match_type:
-                    match_num = match['match_number'] - 1
-                    red_teams[match_num] = [np.int(match['alliances']['red']['teams'][0][3:]),
-                                            np.int(match['alliances']['red']['teams'][1][3:]),
-                                            np.int(match['alliances']['red']['teams'][2][3:])]
-                    red_scores[match_num] = [match['alliances']['red']['score'],
-                                             match['score_breakdown']['red']['auto'],
-                                             match['score_breakdown']['red']['foul']]
-                    blue_teams[match_num] = [np.int(match['alliances']['blue']['teams'][0][3:]),
-                                             np.int(match['alliances']['blue']['teams'][1][3:]),
-                                             np.int(match['alliances']['blue']['teams'][2][3:])]
-                    blue_scores[match_num] = [match['alliances']['blue']['score'],
-                                              match['score_breakdown']['blue']['auto'],
-                                              match['score_breakdown']['blue']['foul']]
+                for match in self.raw_matches:
+                    if match['comp_level'] == match_type:
+                        match_num = match['match_number'] - 1
+                        red_teams[match_num] = [np.int(match['alliances']['red']['teams'][0][3:]),
+                                                np.int(match['alliances']['red']['teams'][1][3:]),
+                                                np.int(match['alliances']['red']['teams'][2][3:])]
+                        red_scores[match_num] = [-1 if match['alliances']['red']['score'] is None
+                                                 else match['alliances']['red']['score'],
+                                                  -1 if match['score_breakdown']['red']['auto'] is None
+                                                  else match['score_breakdown']['red']['auto'],
+                                                  -1 if match['score_breakdown']['red']['foul'] is None
+                                                  else match['score_breakdown']['red']['foul']]
+                        blue_teams[match_num] = [np.int(match['alliances']['blue']['teams'][0][3:]),
+                                                 np.int(match['alliances']['blue']['teams'][1][3:]),
+                                                 np.int(match['alliances']['blue']['teams'][2][3:])]
+                        blue_scores[match_num] = [-1 if match['alliances']['blue']['score'] is None
+                                                  else match['alliances']['blue']['score'],
+                                                  -1 if match['score_breakdown']['blue']['auto'] is None
+                                                  else match['score_breakdown']['blue']['auto'],
+                                                  -1 if match['score_breakdown']['blue']['foul'] is None
+                                                  else match['score_breakdown']['blue']['foul']]
 
-            red_win = np.array(red_scores.tolist())[:, 0] > np.array(blue_scores.tolist())[:, 0]
+                red_win = np_array(red_scores.tolist())[:, 0] > np_array(blue_scores.tolist())[:, 0]
 
-            self.__setattr__(var,
-                             np.rot90([match_numbers, red_teams, blue_teams, red_scores, blue_scores, red_win])[::-1])
+                self.__setattr__(var,
+                                 np.rot90(np_array([match_numbers, red_teams, blue_teams, red_scores, blue_scores, red_win], np.object))[::-1])
 
     def __update_rankings(self):
         self.rankings = np.array(self.raw_rankings[1:]).astype(np.int)
 
     def __separate_stats(self):
         stats = self.raw_stats
-        combined = np.array([[int(team), stats['oprs'][team], stats['dprs'][team],
-                              stats['ccwms'][team]] for team in stats['oprs'].keys()], np.object)
+        if stats is not None:
+            combined = np.array([[int(team), stats['oprs'][team], stats['dprs'][team],
+                                  stats['ccwms'][team]] for team in stats['oprs'].keys()], np.object)
+        else:
+            teams = self.get_teams()[:, 0]
+            num_teams = len(teams)
+            combined = np.rot90(np_array([teams, np.zeros(num_teams), np.zeros(num_teams), np.zeros(num_teams)], np.object))[::-1]
         self.stats = combined
 
     def __setup_scouting_arrays(self):
@@ -136,9 +149,12 @@ class BlueAllianceAPI:
     def get_team_matches(self, team_number, match_type='qm'):
         matches = self.get_matches(match_type)
 
-        team_matches = [((team_number in match[1]) or (team_number in match[2])) for match in matches[:, :3]]
-        team_matches = np.array(team_matches)
-        team_matches = matches[team_matches]
+        if len(matches) is not 0:
+            team_matches = [((team_number in match[1]) or (team_number in match[2])) for match in matches[:, :3]]
+            team_matches = np.array(team_matches)
+            team_matches = matches[team_matches]
+        else:
+            team_matches = []
 
         return team_matches
 
@@ -175,22 +191,34 @@ class BlueAllianceAPI:
         # print(np.array(self.raw_rankings[0]))
         if team is 'all':
             return request
-        return request[request[:, 1] == team][0]
+        getter = request[request[:, 1] == team]
+        if len(getter) is not 0:
+            return request[request[:, 1] == team][0]
+        return np_array([0, team, 0, 0, 0, 0, 0, 0, 0])
 
     def get_team_stats(self, team='all'):
         if team is 'all':
             return self.stats
-        else:
-            return self.stats[self.stats[:, 0] == team][0]
+        return self.stats[self.stats[:, 0] == team][0]
+
 
     def do_some_stats(self):
         rankings = self.rankings
 
-        self.extra_stats = np.array([[np.mean(rankings[:, i]), np.std(rankings[:, i])] for i in np.arange(2, 8, 1)])
-        curr_maxes = np.array([np.max(rankings[:, i]) for i in range(len(rankings[0]))])
-        curr_min = np.array([np.min(rankings[:, i]) for i in range(len(rankings[0]))])
-        self.maxes = self.get_z_scores(curr_maxes, False)
-        self.mins = abs(self.get_z_scores(curr_min, False))
+        if len(rankings) is not 0:
+            self.extra_stats = np.array([[np.mean(rankings[:, i]), np.std(rankings[:, i])] for i in np.arange(2, 8, 1)])
+            curr_maxes = np.array([np.max(rankings[:, i]) for i in range(len(rankings[0]))])
+            curr_min = np.array([np.min(rankings[:, i]) for i in range(len(rankings[0]))])
+            self.maxes = self.get_z_scores(curr_maxes, False)
+            self.mins = abs(self.get_z_scores(curr_min, False))
+
+        else:
+            teams = self.get_teams()[:, 0]
+            self.extra_stats = np.zeros((6, 2))
+            curr_maxes = np.zeros((9,))
+            curr_min = np.zeros((9,))
+            self.maxes = self.get_z_scores(curr_maxes, False)
+            self.mins = abs(self.get_z_scores(curr_min, False))
 
     def get_z_scores(self, rankings, normalize=True):
         curr = rankings[2:8]
@@ -283,6 +311,8 @@ class BlueAllianceAPI:
         num = len(values)
         r = np.concatenate((values, [values[0]]))
         theta = np.deg2rad(np.arange(0, 361, 360 / num))
+        if np.isnan(np.sum(r)):
+            r = np.nan_to_num(r)
         fig = plt.Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
         # fig = plt.Figure()
         ax = fig.add_subplot(111, polar=True)
@@ -295,6 +325,11 @@ class BlueAllianceAPI:
         canvas = FigureCanvas(fig)
 
         return canvas
+
+    def create_sstatistics(self):
+        teams = self.get_teams()[:, 0]
+
+
 
 
 def get_events(year):

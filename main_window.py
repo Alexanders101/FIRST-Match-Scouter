@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Tue Mar 31 20:00:09 2015
+# Created: Fri Apr  3 14:46:43 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -490,7 +490,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -552,7 +552,7 @@ class Ui_MainWindow(object):
         self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Add", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_button.setText(QtGui.QApplication.translate("MainWindow", "E", None, QtGui.QApplication.UnicodeUTF8))
         self.delete_button.setText(QtGui.QApplication.translate("MainWindow", "Del", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_39.setText(QtGui.QApplication.translate("MainWindow", "Litter", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_39.setText(QtGui.QApplication.translate("MainWindow", "Container", None, QtGui.QApplication.UnicodeUTF8))
         self.scout_litter.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.scout_auto_set.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("MainWindow", "Tele-Op", None, QtGui.QApplication.UnicodeUTF8))

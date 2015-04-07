@@ -64,6 +64,7 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         self.waiting_threat.thread_done.connect(self._finish_update)
         self.delete_button.pressed.connect(self.delete_scout)
         self.edit_button.pressed.connect(self.edit_scout)
+        self.setup_scouting_table()
         self.update_ui(True)
         self.save_database(False, False)
 
@@ -87,24 +88,27 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         if diag.exec_():
             data = diag.give_back()
             self.API.edit_scout_data(self.curr_team, data[1], data[2:], data[0])
-            self.update_ui()
             self.save_database(False, False)
+            self.update_ui()
 
     def update_ui(self, reset=False):
 
         current_matches_list = self.matches_list.currentRow()
         current_scouting_list = self.scouting_list.currentRow()
+        team = int(self.team_selection.currentText())
+
+        # if not reset:
+        #     self.update_ui(True)
+
         self.matches_list.clear()
         self.scouting_list.clear()
-        self.setup_scouting_table()
+        self.reset_scouting_table()
 
-        team = int(self.team_selection.currentText())
         self.curr_team = team
         rankings = self.API.get_team_rankings(team)
         stats = self.API.get_team_stats(team)
 
         names = ['Qual Avg', 'Auto', 'Container', 'Coopertition', 'Litter', 'Tote']
-
         self.clear_layout(self.graph_area)
         self.graph_area.addWidget(self.API.plot_skill(self.API.get_z_scores(rankings), names))
         self.team_qm_matches = self.API.get_team_matches(team)
@@ -116,7 +120,6 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         self.team_qf_scouting = np.array(self.API.get_scout_data(team, 'qf')[1], np.object)
         self.team_sf_scouting = np.array(self.API.get_scout_data(team, 'sf')[1], np.object)
         self.team_f_scouting = np.array(self.API.get_scout_data(team, 'f')[1], np.object)
-
         self.match_strings = self.__make_match_list(self.team_qm_matches,
                                                     self.team_qf_matches, self.team_sf_matches, self.team_f_matches)
 
@@ -129,13 +132,12 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         self.opr.setText('%.2f' % (stats[1]))
         self.dpr.setText('%.2f' % (stats[2]))
         self.ccwm.setText('%.2f' % (stats[3]))
-
-        self.gen_score.setText(str(rankings[2]))
-        self.gen_auto.setText(str(rankings[3] / num_matches))
-        self.gen_cont.setText(str(rankings[4] / num_matches))
-        self.gen_coop.setText(str(rankings[5] / num_matches))
-        self.gen_litter.setText(str(rankings[6] / num_matches))
-        self.gen_tote.setText(str(rankings[7] / num_matches))
+        self.gen_score.setText('%.2f' % (rankings[2]))
+        self.gen_auto.setText('%.2f' % (rankings[3] / num_matches))
+        self.gen_cont.setText('%.2f' % (rankings[4] / num_matches))
+        self.gen_coop.setText('%.2f' % (rankings[5] / num_matches))
+        self.gen_litter.setText('%.2f' % (rankings[6] / num_matches))
+        self.gen_tote.setText('%.2f' % (rankings[7] / num_matches))
 
         self.matches_list.addItems(self.match_strings)
 
@@ -144,7 +146,6 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
             if len(scouted_matches) is not 0:
                 for match_num in scouted_matches[:, 0]:
                     self.scouting_list.addItem('%s %i' % (match_type, match_num))
-
         if reset:
             self.matches_list.setCurrentRow(0)
             if self.scouting_list.count() is not 0:
@@ -155,10 +156,13 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         else:
             self.matches_list.setCurrentRow(current_matches_list)
             if self.scouting_list.count() is not 0:
+                print('13')
                 self.scouting_list.setCurrentRow(current_scouting_list)
+                print('14')
             else:
                 self.set_blank_scouting()
                 # self.scouting_list.addItems(self.match_strings)
+
 
     def _update_ui(self):
         self.update_ui(True)
@@ -173,10 +177,19 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
 
     @staticmethod
     def __make_match_list(qm, qf, sf, f):
-        qms = ['Qual %i' % ma for ma in qm[:, 0]]
-        qfs = ['Quart. Final %i' % ma for ma in qf[:, 0]]
-        sfs = ['Semi Final %i' % ma for ma in sf[:, 0]]
-        fs = ['Final %i' % ma for ma in f[:, 0]]
+        qms = []
+        qfs = []
+        sfs = []
+        fs = []
+
+        if len(qm) is not 0:
+            qms = ['Qual %i' % ma for ma in qm[:, 0]]
+        if len(qf) is not 0:
+            qfs = ['Quart. Final %i' % ma for ma in qf[:, 0]]
+        if len(sf) is not 0:
+            sfs = ['Semi Final %i' % ma for ma in sf[:, 0]]
+        if len(f) is not 0:
+            fs = ['Final %i' % ma for ma in f[:, 0]]
 
         return qms + qfs + sfs + fs
 
@@ -226,16 +239,23 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
 
         curr_match = matches[matches[:, 0] == int(num)][0][1]
 
+        print('21')
         self.scout_auto_set.setText(str(curr_match[0]))
         self.scout_tote_set.setText(str(curr_match[1]))
+        print('22')
         self.scout_cont_set.setText(str(curr_match[2]))
         self.scout_stack_set.setText(str(curr_match[3]))
+        print('23')
         self.scout_human.setText(str(curr_match[4]))
         self.scout_landfill.setText(str(curr_match[5]))
+        print('24')
         self.scout_litter.setText(str(curr_match[6]))
         self.scout_coop.setText(str(curr_match[7]))
+        print('25')
         self.scouting_comments.setText(str(curr_match[8]))
+        print('26')
         self.draw_scouting_table(curr_match[9])
+        print('27')
 
     def set_blank_scouting(self):
 
@@ -260,8 +280,9 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
             ret = confirm.exec_()
 
         if ret == QMessageBox.Save:
-            self.file_thread.set_api(self.API)
-            self.file_thread.start()
+            # self.file_thread.set_api(self.API)
+            # self.file_thread.start()
+            joblib.dump(self.API, DATABASE_FILE, True)
             if notification:
                 message = QMessageBox()
                 message.setText('Successfully Saved')
@@ -290,9 +311,14 @@ class MainWindow(QMainWindow, main_window.Ui_MainWindow):
         self.update_button.setText('Update')
 
     def setup_scouting_table(self):
-        for i in range(self.scouting_table.columnCount()):
-            for j in range(self.scouting_table.rowCount()):
+        for j in range(self.scouting_table.rowCount()):
+            for i in range(self.scouting_table.columnCount()):
                 self.scouting_table.setItem(j, i, QTableWidgetItem(''))
+
+    def reset_scouting_table(self):
+        for row in range(self.scouting_table.rowCount()):
+            for col in range(self.scouting_table.columnCount()):
+                self.scouting_table.item(row, col).setText('')
 
     def draw_scouting_table(self, data):
         for row in range(self.scouting_table.rowCount()):

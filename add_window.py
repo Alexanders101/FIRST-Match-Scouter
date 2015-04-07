@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'add_window.ui'
 #
-# Created: Tue Mar 31 20:00:09 2015
+# Created: Fri Apr  3 14:46:43 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -195,7 +195,6 @@ class Ui_Add_match(object):
         self.litter_spin = QtGui.QSpinBox(self.horizontalLayoutWidget_3)
         self.litter_spin.setFrame(False)
         self.litter_spin.setButtonSymbols(QtGui.QAbstractSpinBox.PlusMinus)
-        self.litter_spin.setSingleStep(2)
         self.litter_spin.setObjectName("litter_spin")
         self.gridLayout_7.addWidget(self.litter_spin, 9, 1, 1, 1)
         self.coop_spin = QtGui.QSpinBox(self.horizontalLayoutWidget_3)
@@ -233,7 +232,7 @@ class Ui_Add_match(object):
         self.team_number.setText(QtGui.QApplication.translate("Add_match", "846", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("Add_match", "Add New", None, QtGui.QApplication.UnicodeUTF8))
         self.label_32.setText(QtGui.QApplication.translate("Add_match", "Auto Set", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_39.setText(QtGui.QApplication.translate("Add_match", "Litter", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_39.setText(QtGui.QApplication.translate("Add_match", "Container", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("Add_match", "Tele-Op", None, QtGui.QApplication.UnicodeUTF8))
         self.label_38.setText(QtGui.QApplication.translate("Add_match", "Landfill", None, QtGui.QApplication.UnicodeUTF8))
         self.label_31.setText(QtGui.QApplication.translate("Add_match", "Auto", None, QtGui.QApplication.UnicodeUTF8))

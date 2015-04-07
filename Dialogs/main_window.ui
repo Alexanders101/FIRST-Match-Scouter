@@ -223,7 +223,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="general_tab">
         <property name="enabled">
@@ -831,7 +831,7 @@
             <item row="9" column="0">
              <widget class="QLabel" name="label_39">
               <property name="text">
-               <string>Litter</string>
+               <string>Container</string>
               </property>
              </widget>
             </item>
