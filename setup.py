@@ -9,5 +9,5 @@ setup(  name = "Event Scouter",
         author_email= "alexanders101@gmail.com",
         url="https://github.com/Alexanders101/FIRST-Match-Scouter",
         requires=['joblib', 'PySide', 'matplotlib', 'numpy'],
-        packages=['event_scouter']
+        packages=['frc_scouter']
         )

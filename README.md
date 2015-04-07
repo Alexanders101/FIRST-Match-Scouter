@@ -13,27 +13,33 @@ Requirements:
     Numpy
     Matplotlib
     Joblib
+    
+compile.py requires cx_freeze
   
+  
+Install Instruction:
+
+1. 
   
 Completed:
 
-    Event selection
-    Teams
-    Matches
-    Radial graph
-    Adding scouting data
-    Editing scouting data
-    Removing scouting data
-    Saving
-    Updating data
+- Event selection
+- Teams
+- Matches
+- Radial graph
+- Adding scouting data
+- Editing scouting data
+- Removing scouting data
+- Saving
+- Updating data
     
 Todo:
     
-    Scouting data analysis
-    Export to csv / excel
-    SQL / NoSQL database
-    Online database
-    Easy implementations for future games
+- Scouting data analysis
+- Export to csv / excel
+- SQL / NoSQL database
+- Online database
+- Easy implementations for future games
     
     
 
