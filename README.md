@@ -15,6 +15,8 @@ Initial setup requires an internet connection, and a local database is stored af
     Joblib
     cx_freeze (only for compiling)
     
+To easily install requirements: `pip3 install -r requirements.txt`
+    
 ### Instructions:
 
    Run without installing: `python3 FRC_Event_Scouter.py`
