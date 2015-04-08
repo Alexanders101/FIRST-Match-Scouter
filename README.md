@@ -5,7 +5,7 @@ It provides average score data, team matches, and also scouting support.
 
 Initial setup requires an internet connection, and a local database is stored afterwards.
 
-Requirements:
+### Requirements:
 
     QT 4.8+
     Python 3.x
@@ -13,10 +13,18 @@ Requirements:
     Numpy
     Matplotlib
     Joblib
+    cx_freeze (only for compiling)
     
-compile.py requires cx_freeze
+### Instructions:
 
-Completed:
+   Run without installing: python3 FRC_Event_Scouter.py
+
+   Install: python3 setup.py install
+
+   Compile: python3 compile.py build
+
+
+### Completed:
 
 - Event selection
 - Teams
@@ -28,7 +36,7 @@ Completed:
 - Saving
 - Updating data
     
-Todo:
+### Todo:
     
 - Scouting data analysis
 - Export to csv / excel
