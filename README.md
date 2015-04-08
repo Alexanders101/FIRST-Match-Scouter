@@ -17,11 +17,11 @@ Initial setup requires an internet connection, and a local database is stored af
     
 ### Instructions:
 
-   Run without installing: python3 FRC_Event_Scouter.py
+   Run without installing: `python3 FRC_Event_Scouter.py`
 
-   Install: python3 setup.py install
+   Install: `python3 setup.py install`
 
-   Compile: python3 compile.py build
+   Compile: `python3 compile.py build`
 
 
 ### Completed:
