@@ -15,7 +15,7 @@ Initial setup requires an internet connection, and a local database is stored af
     Joblib
     cx_freeze (only for compiling)
     
-To easily install requirements: `pip3 install -r requirements.txt`
+To easily install requirements: `sudo pip3 install -r requirements.txt`
     
 ### Instructions:
 
